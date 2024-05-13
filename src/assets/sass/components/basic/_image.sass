@@ -1,0 +1,5 @@
+$radius_options: ((none,none),(s,10px),(m,20px),(l,25px))
+
+@each $radius in $radius_options
+    .image-rounded-#{nth($radius,1)}
+        border-radius: nth($radius,2)
