@@ -2,13 +2,23 @@
   <v-container class="container">
     <v-row>
       <v-col>
-        <h1>tudús</h1>
+        <BasicImage
+        :src="imageBrand.header.image.src"
+        :alt="imageBrand.header.image.alt"
+        :width="imageBrand.header.image.width"
+        :height="imageBrand.header.image.height"
+        :sources="imageBrand.header.image.sources"
+        :attrs="imageBrand.header.image.attrs"
+        :type="imageBrand.header.image.type"
+        :radius="imageBrand.header.image.radius"
+        class="container__image"
+        />
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         <v-sheet>
-          <v-form ref="form" @submit.prevent="addTodo">
+          <v-form ref="form">
             <v-text-field
               v-model="newTodo.title"
               class= "input"
@@ -30,10 +40,11 @@
               color="primary"
               type="submit"
               class="mb-5"
+              @click.prevent="addTodo"
             >Add tudú</v-btn>
             <v-list class="todos">
               <v-list-item
-                v-for="(todo, index) in todoList"
+                v-for="(todo, index) in sharedTodoList"
                 :key="index"
                 @click="toggleCompleted(index)"
                 @contextmenu.prevent="deleteItem(index)"
@@ -63,8 +74,12 @@
 </template>
 
 <script>
-import axios from "axios";
+import BasicImage from '@/components/basic/image/index.vue'
+
 export default {
+  components: {
+    BasicImage,
+  },
   data: () => ({
     newTodo: {
       title: "",
@@ -77,27 +92,11 @@ export default {
       user: 1,
       list: 1,
     },
-    todoList: [],
-    urlUser: "http://127.0.0.1:8000/user/",
-    urlList: "http://127.0.0.1:8000/list/",
-    urlTodo: "http://127.0.0.1:8000/todo/",
+    sharedTodoList: [],
     editingId: null,
+    imageBrand: require('@/content/basic/branding/text.js')
   }),
-  mounted() {
-    this.getTodos();
-  },
   methods: {
-    getTodos() {
-      axios
-        .get(`${this.urlTodo}?ordering=completed`)
-        .then((response) => {
-          this.todoList = response.data;
-          console.log(this.todoList);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
     addTodo() {
       if (this.newTodo.title) {
         var data = {
@@ -109,40 +108,36 @@ export default {
         if (this.newTodo.description) {
           data.description = this.newTodo.description;
         }
-        axios
-          .post(this.urlTodo, data)
-          .then(() => {
-            this.getTodos();
-            this.newTodo.title = "";
-            this.newTodo.description = "";
-            this.newTodo.completed = false;
-            this.$refs.form.reset();
-          })
-          .catch((error) => {
-            console.error(error.response);
-          });
+        console.log('sharedTodoList',this.sharedTodoList);
+        this.sharedTodoList.push(data);
+        this.$emit('new-todo', this.sharedTodoList);
+        this.newTodo.title = "";
+        this.newTodo.description = "";
+        this.newTodo.completed = false;
+        this.$refs.form.reset();
       }
     },
     toggleCompleted(index)  {
-      this.todoList[index].completed = !this.todoList[index].completed;
-      const url = this.urlTodo + this.todoList[index].id + "/";
-      var data = {
-        completed: this.todoList[index].completed,
-      };
-      axios.patch(url, data).then(() => {
-        this.getTodos();
-      });
+      this.sharedTodoList[index].completed = !this.sharedTodoList[index].completed;
     },
     deleteItem(index) {
-      const url = this.urlTodo + this.todoList[index].id + "/";
-      axios.delete(url).then(() => {
-        this.getTodos();
-      });
+      this.sharedTodoList.splice(index, 1);
     },
     editItem(index){
-      this.newTodo = this.todoList[index];
-      this.editingId = this.todoList[index].id;
-    }
+      this.newTodo = this.sharedTodoList[index];
+      this.editingId = index;
+    },
+    saveEdit(){
+      this.sharedTodoList[this.editingId] = this.newTodo;
+      this.newTodo = {
+        title: "",
+        description: "",
+        completed: false,
+        user: 1,
+        list: 1,
+      };
+      this.editingId = null;
+    },
   }
 };
 </script>

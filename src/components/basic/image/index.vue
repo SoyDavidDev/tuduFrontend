@@ -1,13 +1,13 @@
 <template>
     <div class="image">
     <img
+        :class="Sass"
+        decoding="async"
+        :loading="attrs.notLazy ? 'eager' : 'lazy'"
         :src="src"
         :alt="alt"
-        :width="width"
-        :height="height"
-        :class="type"
-        :style="radius"
-        :attrs="attrs"
+        :width="parseInt(width)"
+        :height="parseInt(height)"
     >
     <source
         v-for="(source, index) in sources"
@@ -23,38 +23,65 @@
 export default {
     name: 'BasicImage',
     props: {
+        // fit icons on apple device
+        isIcon: {
+            type: Boolean,
+            required: false, 
+            default: false
+        },
+        // SRC from image like url or path
         src: {
             type: String,
-            required: true
+            required: false
         },
+        // Alt attribute to image, refers the content of picture
         alt: {
             type: String,
-            default: ''
+            required: false
         },
+        // Default width space to preserve image size
         width: {
-            type: [String, Number],
-            default: 'auto'
+            type: Number, 
+            default: 100,
         },
+        // Default height space to preserve image size
         height: {
-            type: [String, Number],
-            default: 'auto'
-        },
+            type: Number,
+            default: 100,
+       },
+        // List of src and media sizes depending on the screen size
         sources: {
             type: Array,
-            default: () => []
+            required: false
         },
+        // Attributes to performance or filters to image
         attrs: {
             type: Object,
-            default: () => {}
+            required: false,
+            default: () => ({
+                needContrast: false,
+                notLazy: true 
+            })
         },
+        // Type and shape of border radius on image: full (all sides) / top (only top sides) / circle ( circular sides )
         type: {
             type: String,
-            default: 'image'
+            required: false, 
+            default: "full"
         },
-        radius: {
+        // Value of border radius: none / xs / s / m / l / xl
+        radius:{  // (none,0px) (xs,5px) (s,10px) (m,20px) (l,25px) (xl,40px)
             type: String,
-            default: ''
+            required: false,
+            default: "none"
         }
+    },
+    computed: {
+        Sass() {
+            if(this.isIcon) return ''
+            return `image-${this.type}-${this.radius}-${this.attrs.needContrast == true ? 'contrast' : 'noContrast'}`
+
+        },
     }
 };
 </script>

@@ -9,36 +9,44 @@
     <v-btn icon @click='copyToClipboard'>
         <v-icon>mdi-content-copy</v-icon>
     </v-btn>
-    <SharedTodoComponent @new-todo='handleNewTask'/>
+    
+    <SharedTodoComponent @new-todo='handleNewTask' v-if="isHomeView"/>
 </div>
 </template>
 
 <script>
-import SharedTodoComponent from './SharedTodoComponent.vue';
+import SharedTodoComponent from '@/components/todos/SharedTodoComponent.vue';
 
 export default{
     components: {
         SharedTodoComponent
     },
+    props: ['tasks', 'isHomeView'],
     data(){
         return {
-            tasks: []
+            localTasks: [],
+        }
+    },
+    watch:{
+        tasks(newTasks){
+            console.log('TAREAS watch', newTasks);
+            this.localTasks = newTasks;
         }
     },
     methods: {
         handleNewTask(taskList){
-            console.log('NUEVAS TAREAS', taskList);
-            this.tasks = taskList;
+            console.log('NUEVAS TAREAS handler', taskList);
+            this.localTasks = taskList;
         },
         generateTasksText(){
-            console.log('TAREAS', this.tasks);
+            console.log('TAREAS generatetext', this.localTasks);
             let tasksText = '';
-            for (let i = 0; i < this.tasks.length; i++) {
-                tasksText += `${i + 1}. ${this.tasks[i].title}`;
-                if (this.tasks[i].description) {
-                    tasksText += ` - ${this.tasks[i].description}`;
+            for (let i = 0; i < this.localTasks.length; i++) {
+                tasksText += `${i + 1}. ${this.localTasks[i].title}`;
+                if (this.localTasks[i].description) {
+                    tasksText += ` - ${this.localTasks[i].description}`;
                 }
-                if (this.tasks[i].completed) {
+                if (this.localTasks[i].completed) {
                     tasksText += ' (Completada)';
                 } else {
                     tasksText += ' (Pendiente)';
