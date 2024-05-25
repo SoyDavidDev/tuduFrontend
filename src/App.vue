@@ -16,6 +16,7 @@
       <v-btn text to="/login">Login</v-btn>
       <v-btn text to="/register">Register</v-btn>
       <v-btn text to="/mylists">My Lists</v-btn>
+      <v-btn text to="/login" @click="logout">Logout</v-btn>
     </v-app-bar>
     <v-main>
       <router-view />
@@ -25,6 +26,8 @@
 
 <script>
 import BasicImage from '@/components/basic/image/index.vue'
+import auth from "@/services/auth.js";
+
 
 export default {
   name: "App",
@@ -36,6 +39,11 @@ export default {
     return {
       imageBrand: require('@/content/basic/branding/text.js')
     }
+  },
+  methods: {
+    logout() {
+      auth.logout();
+    },
   },
 };
 </script>

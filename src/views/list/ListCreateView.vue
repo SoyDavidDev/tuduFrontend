@@ -10,7 +10,7 @@
           <v-sheet>
             <v-form ref="form" @submit.prevent="addList">
               <v-text-field
-                v-model="newList.name"
+                v-model="newList.title"
                 :counter="40"
                 :rules="newList.nameRules"
                 label="Nombre de la lista"
@@ -25,7 +25,7 @@
                   :key="index"
                 >
                   <div>
-                    <h6>{{ list.name }}</h6>
+                    <h6>{{ list.title }}</h6>
                   </div>
                 </v-list-item>
               </v-list>
@@ -41,47 +41,52 @@
   export default {
     data: () => ({
       newList: {
-        name: "",
+        title: "",
         nameRules: [
           (v) => !!v || "El nombre es requerido",
           (v) => (v && v.length <= 40) || "El nombre debe tener menos de 40 caracteres",
         ],
-        user: 1,
+        user: localStorage.getItem("user_id"),
       },
       listList: [],
-      urlUser: "http://127.0.0.1:8000/user/",
-      urlList: "http://127.0.0.1:8000/list/",
+      urlUser : 'http://127.0.0.1:8000/api/v1/users/',
+      urlCreateList: 'http://127.0.0.1:8000/api/v1/lists/create/'
     }),
     mounted() {
       this.getLists();
     },
     methods: {
       getLists() {
+        const userId = this.newList.user;
         axios
-          .get(this.urlList)
+          .get(this.urlUser + userId + '/lists/')
           .then((response) => {
             this.listList = response.data;
           })
           .catch((error) => {
-            console.error(error);
+            console.error(error.response);
           });
       },
       addList() {
-        if (this.newList.name) {
+        if (this.newList.title){
           var data = {
-            name: this.newList.name,
-            user: this.newList.user,
+            title: this.newList.title,
+            user_id: parseInt(this.newList.user),
           };
+          console.log('Data: ', data);
           axios
-            .post(this.urlList, data)
-            .then(() => {
+            .post(this.urlCreateList, data)
+            .then((response) => {
+              console.log('Response: ', response);
               this.getLists();
-              this.newList.name = "";
-              this.$refs.form.reset();
+              this.newList.title = "";
             })
             .catch((error) => {
-              console.error(error.response);
+              console.log('Error: ', error);
+              console.log('Error creando la lista');
+
             });
+
         }
       },
     }

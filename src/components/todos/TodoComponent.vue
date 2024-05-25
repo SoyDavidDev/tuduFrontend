@@ -81,63 +81,49 @@ export default {
     BasicImage,
   },
   props: ["id", "user_id", "tasks"],
-
   data() {
     return {
     todos: [],
     name : "TodoComponent",
     newTodo: this.initializeNewTodo(),
     todoList: [],
-    urlUser: "http://127.0.0.1:8000/user/",
-    urlList: "http://127.0.0.1:8000/list/",
-    urlTodo: "http://127.0.0.1:8000/todo/",
+    urlUser: "http://127.0.0.1:8000/api/v1/users/",
+    urlList: "http://127.0.0.1:8000/api/v1/lists/",
+    urlTodo: "http://127.0.0.1:8000/api/v1/todos/",
     editingId: null,
-    imageBrand: require('@/content/basic/branding/text.js')
-    };
+    imageBrand: require('@/content/basic/branding/text.js'),
+
+  };
   },
   async created() {
     try{
-      const userData = await this.getUserData(this.user_id);
-      console.log('userData', userData)
-      console.log('Id de User', this.user_id)
-      console.log('Lista número: ' + this.id, userData.lists)
-      if (!userData.lists.find((list) => list.id == this.id)){
-        console.log('No se encontró la lista');
-      } else{
-        this.todoList = userData.lists.find((list) => list.id == this.id).todo;
-        console.log('Lista de usuario: ' + this.user_id + 
-        ' con ID de lista : '+ this.id, this.todoList)
-        console.log('Se encontró la lista');
-        this.$emit('new-task', this.todoList);
-      }
-      return userData;
+      const currentList = await this.getListsUser(this.user_id);
+      console.log('Id de User', currentList.user_id);
+      console.log('Listas de usuario', currentList);
+      this.todoList = currentList.todos;
+      
     } catch (error) {
       console.error(error);
       console.log('Error al obtener datos de usuario');
     }
   },
   methods: {
-    async getUserData(userId) {
-      console.log('ListId', userId);
+    async getListsUser(userId) {
+      console.log('User ID', userId);
       try{
-        const userResponse = await axios.get(this.urlUser + userId + "/");
-        const userData = userResponse.data;
-        console.log('userData', userData);
+        const userResponse = await axios.get(this.urlUser + userId + "/lists/");
+        const userLists = userResponse.data;
+        console.log('userLists función', userLists);
 
-        const listResponse = await axios.get(this.urlList + "?user=" + userId);
-        const userLists = listResponse.data;
-
-        for (let list of userLists){
-          const todoResponse = await axios.get(this.urlTodo + "?list=" + list.id);
-          list.todo = todoResponse.data;
-        }
-        userData.lists = userLists;
-        return userData;
+        const matchingList = userLists.find((list) => list.id == this.id);
+        console.log('Lista que coincide', matchingList);
+        return matchingList;
       } catch (error) {
         console.error(error);
-        console.log('Error al obtener datos de usuario de get user data');
+        console.log('Error al obtener datos de usuario de get user lists data');
       }
     },
+    
     initializeNewTodo() {
       return {
         title: "",

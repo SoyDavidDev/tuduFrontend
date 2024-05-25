@@ -2,14 +2,14 @@
   <div class="login">
     <h1 class="title">Login in the page</h1>
     <form action class="form" @submit.prevent="login">
-      <label class="form-label" for="#email">Email:</label>
+      <label class="form-label" for="#email">Username:</label>
       <input
-        v-model="email"
+        v-model="username"
         class="form-input"
-        type="email"
-        id="email"
+        type="text"
+        id="username"
         required
-        placeholder="Email"
+        placeholder="Username"
       />
       <label class="form-label" for="#password">Password:</label>
       <input
@@ -28,23 +28,36 @@
 </template>
 
 <script>
+import axios from "axios";
 import auth from "@/services/auth.js";
 
 export default {
   data: () => ({
-    email: "",
+    username: "",
     password: "",
     error: false,
   }),
   methods: {
     async login() {
       console.log("Login");
-      console.log(this.email);
+      console.log(this.username);
       console.log(this.password);
       try{
-        const response = await auth.login(this.email, this.password);
-        console.log(response);
+        const response = await auth.login(this.username, this.password);
+        // Aquí deberíamos guardar el token en el localStorage
+        localStorage.setItem("accessToken", response.access);
+        localStorage.setItem('userId', response.user_id);
+        console.log('Response: ',response);
         console.log("Logged in");
+
+        // const apiResponse = await axios.get("http://localhost:8000/api/v1/users/1/lists/", {
+        //   headers: {
+        //     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        //   },
+        // });
+        // console.log('Api Response DATA: ',apiResponse.data);
+        this.$router.push("/mylists");
+        
       } catch (error) {
         console.log("Error con la response");
         this.error = true;
