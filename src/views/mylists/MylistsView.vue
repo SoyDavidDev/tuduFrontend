@@ -23,9 +23,8 @@
             class="mx-auto"
             max-width="344"
             hover
-            :to ="`/list/${list.user_id}/${list.id}/`"
             >
-            <v-card-item>
+            <v-card-item @click.stop="goToList(list.user_id, list.id)">
                 <v-card-title>
                 Título lista {{ list.title }}
                 </v-card-title>
@@ -33,6 +32,23 @@
                 Lista usuario número:    {{ list.user_id }}
                 Número lista;   {{ list.id }}
                 </v-card-subtitle>
+                <!-- Botón para editar y eliminar -->
+                <v-card-actions>
+                <v-btn
+                    color="primary"
+                    text
+                    @click.stop="goToEditList(list.user_id, list.id)"
+                >
+                    Editar
+                </v-btn>
+                <v-btn
+                    color="error"
+                    text
+                    @click.stop="deleteList(list.id)"
+                >
+                    Eliminar
+                </v-btn>
+                </v-card-actions>
             </v-card-item>
 
             </v-card>
@@ -47,8 +63,10 @@ export default {
     data() {
         return {
             lists: [],
+            urlLists: "http://127.0.0.1:8000/api/v1/lists/"
         }
     },
+    
     created() {
         this.fetchLists();
     },
@@ -65,6 +83,26 @@ export default {
                     console.error('Error fetching lists:', error);
                 });
         },
+
+        goToEditList(userId, listId) {
+        setTimeout(() => {
+            this.$router.push(`/list/edit/${userId}/${listId}`);
+        }, 0);
+        },
+        goToList(userId, listId) {
+            this.$router.push(`/list/${userId}/${listId}`);
+        },
+        deleteList(listId){
+            axios.delete(this.urlLists + listId + '/delete/')
+            .then(response => {
+                console.log('List deleted:', response);
+                this.fetchLists();
+            })
+            .catch(error => {
+                console.error('Error deleting list:', error);
+            });
+        }
+
     }
 }
 </script>

@@ -32,8 +32,11 @@ export default {
     },
   },
   created() {
+    console.log('Información CREATED de Todoview');
     console.log('ID:', this.id);
     console.log('USER ID:', this.user_id);
+    console.log('TASKS:', this.tasks);
+    console.log('FIN Información CREATED de Todoview');
   },
 } 
 

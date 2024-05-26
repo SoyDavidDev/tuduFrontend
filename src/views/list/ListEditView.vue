@@ -9,7 +9,7 @@
                     <v-card-text>
                         <v-form @submit.prevent="editList">
                             <v-text-field
-                                v-model="list.name"
+                                v-model="list.title"
                                 label="Nombre de la lista"
                             ></v-text-field>
                             <v-btn
@@ -31,20 +31,22 @@ export default {
     data() {
         return {
             list: {
-                name: '',
+                title: '',
             },
-            urlList: "http://127.0.0.1:8000/list/",
+            urlList: "http://127.0.0.1:8000/api/v1/lists/",
             id: this.$route.params.id,
             user_id: this.$route.params.user_id,
         }
     },
     async created() {
         try {
-            const response = await axios.get(this.urlList + this.id);
+            const response = await axios.get(this.urlList + this.id + '/');
             this.list = response.data;
             console.log('Response de created', response);
             console.log('List', this.list);
             console.log('ID', this.id);
+            console.log('Title of the list', response.data[0].title)
+            this.list.title = response.data[0].title;
         } catch (error) {
             console.error(error);
             console.log('Error al cargar la lista.');
@@ -54,12 +56,12 @@ export default {
         async editList(){
             try {
                 const update = {
-                    name: this.list.name,
+                    title: this.list.title,
                 }
                 const response = 
                 await axios
                 .put(
-                    this.urlList + this.id + '/', 
+                    this.urlList + this.id + '/update/', 
                     update
                 );
                 this.list = response.data;

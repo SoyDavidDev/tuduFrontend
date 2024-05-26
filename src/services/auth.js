@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const URLToken = 'http://127.0.0.1:8000/api/v1/token/';
+const URLCreateUser = 'http://127.0.0.1:8000/api/v1/users/create/';
 
 export default {
   async login(username, password) {
@@ -22,7 +23,28 @@ export default {
     console.log("logout");
     console.log(localStorage.getItem("accessToken"));
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user_id");
   },
+
+  register(username, first_name, last_name, email, password) {
+    try{
+      const response = axios.post(URLCreateUser, {
+        username,
+        first_name,
+        last_name,
+        email,
+        password,
+      });
+      console.log('Register success');
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      console.log('Error in register')
+      return error.response.data;
+    }
+  },
+
 
 
   async refreshToken() {

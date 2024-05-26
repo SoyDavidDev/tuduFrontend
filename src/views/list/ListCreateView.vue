@@ -80,6 +80,7 @@
               console.log('Response: ', response);
               this.getLists();
               this.newList.title = "";
+              this.$router.push('/mylists');
             })
             .catch((error) => {
               console.log('Error: ', error);

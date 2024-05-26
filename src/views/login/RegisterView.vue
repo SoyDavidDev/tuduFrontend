@@ -2,14 +2,32 @@
     <div class="register">
       <h1 class="title">Sign Up</h1>
       <form action class="form" @submit.prevent="register">
-        <label class="form-label" for="#nane">Name:</label>
+        <label class="form-label" for="#nane">Username:</label>
         <input
-          v-model="name"
+          v-model="username"
           class="form-input"
           type="text"
-          id="name"
+          id="username"
           required
-          placeholder="Name"
+          placeholder="Username"
+        />
+        <label class="form-label" for="#nane">First Name:</label>
+        <input
+          v-model="first_name"
+          class="form-input"
+          type="text"
+          id="first_name"
+          required
+          placeholder="First Name"
+        />
+        <label class="form-label" for="#nane">Last Name:</label>
+        <input
+          v-model="last_name"
+          class="form-input"
+          type="text"
+          id="last_name"
+          required
+          placeholder="Last Name"
         />
         <label class="form-label" for="#email">Email:</label>
         <input
@@ -48,15 +66,16 @@
 
   export default {
     data: () => ({
-        name: "",
+        username: "",
+        first_name: "",
+        last_name: "",
         email: "",
         password: "",
         passwordRepeat: "",
     }),
     methods: {
-      async register() {
-        const response = await auth.register(this.name,this.email, this.password);
-            console.log(response);
+      register() {
+        const response = auth.register(this.username,this.first_name, this.last_name,this.email, this.password);
             console.log("Registered");
       },
     },

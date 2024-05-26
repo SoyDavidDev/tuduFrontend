@@ -90,6 +90,7 @@ export default {
     urlUser: "http://127.0.0.1:8000/api/v1/users/",
     urlList: "http://127.0.0.1:8000/api/v1/lists/",
     urlTodo: "http://127.0.0.1:8000/api/v1/todos/",
+    urlTodoCreate: "http://127.0.0.1:8000/api/v1/todos/create/",
     editingId: null,
     imageBrand: require('@/content/basic/branding/text.js'),
 
@@ -98,10 +99,11 @@ export default {
   async created() {
     try{
       const currentList = await this.getListsUser(this.user_id);
+      console.log('Información CREATED de TodoComponent');
       console.log('Id de User', currentList.user_id);
       console.log('Listas de usuario', currentList);
       this.todoList = currentList.todos;
-      
+      console.log('FIN Información CREATED de TodoComponent')
     } catch (error) {
       console.error(error);
       console.log('Error al obtener datos de usuario');
@@ -109,7 +111,7 @@ export default {
   },
   methods: {
     async getListsUser(userId) {
-      console.log('User ID', userId);
+      console.log('INICIO GETLISTSUSER', userId);
       try{
         const userResponse = await axios.get(this.urlUser + userId + "/lists/");
         const userLists = userResponse.data;
@@ -117,6 +119,7 @@ export default {
 
         const matchingList = userLists.find((list) => list.id == this.id);
         console.log('Lista que coincide', matchingList);
+        console.log('FIN GETLISTSUSER');
         return matchingList;
       } catch (error) {
         console.error(error);
@@ -133,8 +136,8 @@ export default {
           (v) => (v && v.length <= 40) || "Title must be less than 40 characters",
         ],
         completed: false,
-        user: this.user_id,
-        list: this.id,
+        user_id: this.user_id,
+        list_id: this.id,
       };
     },
     async getTodos() {
@@ -162,14 +165,16 @@ export default {
         var data = {
           title: this.newTodo.title,
           completed: this.newTodo.completed,
-          user: this.newTodo.user,
-          list: this.newTodo.list,
+          user_id: this.newTodo.user_id,
+          list_id: this.newTodo.list_id,
         };
+        console.log('Data de addTodo', data);
         if (this.newTodo.description) {
           data.description = this.newTodo.description;
         }
+        console.log('Data de addTodo con descripción', data);
         try{
-          const response = await axios.post(this.urlTodo, data);      
+          const response = await axios.post(this.urlTodoCreate, data);      
           this.newTodo.title = "";
           this.newTodo.description = "";
           this.newTodo.completed = false;
@@ -186,7 +191,7 @@ export default {
     },
     toggleCompleted(index)  {
       this.todoList[index].completed = !this.todoList[index].completed;
-      const url = this.urlTodo + this.todoList[index].id + "/";
+      const url = this.urlTodo + this.todoList[index].id + "/update/";
       var data = {
         completed: this.todoList[index].completed,
       };
@@ -197,13 +202,11 @@ export default {
     async deleteItem(index) {
       try{
         console.log('Id de item', this.todoList[index].id);
-        const url = this.urlTodo + this.todoList[index].id + "/";
+        const url = this.urlTodo + this.todoList[index].id + "/delete/";
         console.log('URL de item', url);
         await axios.delete(url);
         console.log('Item eliminado');
         this.todoList.splice(index, 1);
-/*         await this.getTodos();
-        this.$router.go(); */
       } catch{
         console.log('Error al eliminar item');
       }
