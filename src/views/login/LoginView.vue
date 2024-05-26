@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import auth from "@/services/auth.js";
 
 export default {
@@ -47,15 +46,9 @@ export default {
         // Aquí deberíamos guardar el token en el localStorage
         localStorage.setItem("accessToken", response.access);
         localStorage.setItem('userId', response.user_id);
+        this.$store.commit("setLoggedIn", true);
         console.log('Response: ',response);
         console.log("Logged in");
-
-        // const apiResponse = await axios.get("http://localhost:8000/api/v1/users/1/lists/", {
-        //   headers: {
-        //     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-        //   },
-        // });
-        // console.log('Api Response DATA: ',apiResponse.data);
         this.$router.push("/mylists");
         
       } catch (error) {
@@ -67,55 +60,4 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-.login {
-  padding: 2rem;
-}
-.title {
-  text-align: center;
-}
-.form {
-  margin: 3rem auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 20%;
-  min-width: 350px;
-  max-width: 100%;
-  background: rgba(19, 35, 47, 0.9);
-  border-radius: 5px;
-  padding: 40px;
-  box-shadow: 0 4px 10px 4px rgba(0, 0, 0, 0.3);
-}
-.form-label {
-  margin-top: 2rem;
-  color: white;
-  margin-bottom: 0.5rem;
-  &:first-of-type {
-    margin-top: 0rem;
-  }
-}
-.form-input {
-  padding: 10px 15px;
-  background: none;
-  background-image: none;
-  border: 1px solid white;
-  color: white;
-  &:focus {
-    outline: 0;
-    border-color: #1ab188;
-  }
-}
-.form-submit {
-  background: #1ab188;
-  border: none;
-  color: white;
-  margin-top: 3rem;
-  padding: 1rem 0;
-  cursor: pointer;
-  transition: background 0.2s;
-  &:hover {
-    background: #0b9185;
-  }
-}
-</style>
+<style lang="sass" src="@/assets/sass/pages/login/_login.sass" scoped></style>

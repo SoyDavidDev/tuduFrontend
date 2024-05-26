@@ -4,6 +4,23 @@ import router from "./router";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 
+import store from "./store";
+
 loadFonts();
 
-createApp(App).use(router).use(vuetify).mount("#app");
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!store.state.isLoggedIn) {
+      next({
+        name: "login",
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+createApp(App).use(router).use(vuetify).use(store).mount("#app");

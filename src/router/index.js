@@ -32,21 +32,33 @@ const routes = [
     path: "/mylists",
     name: "mylists",
     component: MylistsView,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/list/create",
     name: "list-create",
     component: ListCreateView,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/list/edit/:user_id/:id",
     name: "ListEditView",
     component: ListEditView,
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/list/:user_id/:id",
     name: "TodoView",
     component: TodoView,
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 

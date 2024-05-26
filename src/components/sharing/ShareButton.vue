@@ -1,14 +1,16 @@
 <template>
 <div>
-    <v-btn icon @click='shareOnWhatsApp'>
-        <v-icon>mdi-whatsapp</v-icon>
-    </v-btn>
-    <v-btn icon @click='shareOnEmail'>
-        <v-icon>mdi-email</v-icon>
-    </v-btn>
-    <v-btn icon @click='copyToClipboard'>
-        <v-icon>mdi-content-copy</v-icon>
-    </v-btn>
+    <div class="container__buttons">
+        <v-btn icon @click='shareOnWhatsApp'>
+            <v-icon>mdi-whatsapp</v-icon>
+        </v-btn>
+        <v-btn icon @click='shareOnEmail'>
+            <v-icon>mdi-email</v-icon>
+        </v-btn>
+        <v-btn icon @click='copyToClipboard'>
+            <v-icon>mdi-content-copy</v-icon>
+        </v-btn>
+    </div>
     
     <SharedTodoComponent @new-todo='handleNewTask' v-if="isHomeView"/>
 </div>
@@ -80,3 +82,4 @@ export default{
     }
 }
 </script>
+<style lang="sass" src="@/assets/sass/components/sharing/_shareButtons.sass" scoped> </style>

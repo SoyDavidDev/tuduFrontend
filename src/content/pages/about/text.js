@@ -5,14 +5,14 @@ module.exports = {
     },
     "header": {
         "image": {
-            "src": '/img/web/about/fondoColorido.png',
+            "src": '/img/web/about/about-header.png',
             "alt": 'NO VA LA FOTO!',
-            "width": 1200,
-            "height": 600,
+            "width": 720,
+            "height": 300,
             "sources": [
-                { "media": '(min-width: 1200px)', "srcset": '@/static/img/web/about/fondoColorido.png' },
-                { "media": '(min-width: 800px)', "srcset": '@/static/img/web/about/fondoColorido.png' },
-                { "media": '(min-width: 400px)', "srcset": '@/static/img/web/about/fondoColorido.png' }
+                { "media": '(min-width: 1200px)', "srcset": '/img/web/about/about-header.png' },
+                { "media": '(min-width: 800px)', "srcset": '/img/web/about/about-header.png' },
+                { "media": '(min-width: 400px)', "srcset": '/img/web/about/about-header.png' }
             ],
             "attrs": {notLazy: true},
             "type": 'image',
@@ -26,14 +26,14 @@ module.exports = {
     "one" : {
         "icon": "/icon/web/about/shopping-list-sharing-feature-icon.webp",
         "image": {
-            "src": '/img/web/about/about_one.webp',
+            "src": '/img/web/about/sharing.png',
             "alt": 'NO VA LA FOTO!',
-            "width": 505,
+            "width": 720,
             "height": 604,
             "sources": [
-                { "media": '(min-width: 1200px)', "srcset": '@/static/img/web/about/about_one.webp' },
-                { "media": '(min-width: 800px)', "srcset": '@/static/img/web/about/about_one.webp' },
-                { "media": '(min-width: 400px)', "srcset": '@/static/img/web/about/about_one.webp' }
+                { "media": '(min-width: 1200px)', "srcset": '/img/web/about/sharing.png' },
+                { "media": '(min-width: 800px)', "srcset": '/img/web/about/sharing.png' },
+                { "media": '(min-width: 400px)', "srcset": '/img/web/about/sharing.png' }
             ],
             "attrs": {notLazy: true},
             "type": 'image',

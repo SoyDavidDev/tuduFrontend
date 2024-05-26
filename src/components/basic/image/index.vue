@@ -8,6 +8,7 @@
         :alt="alt"
         :width="parseInt(width)"
         :height="parseInt(height)"
+        :style="{ maxWidth: '100%', height: 'auto', objectFit: 'cover' }"
     >
     <source
         v-for="(source, index) in sources"

@@ -18,12 +18,14 @@
     </section>
 
     <section class="about__one">
-        <img :src="textAbout.one.icon" alt="About one" class="about__one__image">
-        <h2>{{ textAbout.one.title }}</h2>
-        <p>{{ textAbout.one.paragrah.text_one }}</p>
-        <p>{{ textAbout.one.paragrah.text_two }}</p>
-        <p>{{ textAbout.one.paragrah.text_three }}</p>
-        <p>{{ textAbout.one.paragrah.text_four }}</p>
+        <div class="about__one__text">
+            <img :src="textAbout.one.icon" alt="About one" class="about__one__image">
+            <h2>{{ textAbout.one.title }}</h2>
+            <p>{{ textAbout.one.paragrah.text_one }}</p>
+            <p>{{ textAbout.one.paragrah.text_two }}</p>
+            <p>{{ textAbout.one.paragrah.text_three }}</p>
+            <p>{{ textAbout.one.paragrah.text_four }}</p>
+        </div>
         <BasicImage
             :src="textAbout.one.image.src"
             :alt="textAbout.one.image.alt"
@@ -38,12 +40,14 @@
     </section>
 
     <section class="about__two">
-        <img :src="textAbout.two.icon" alt="About two" class="about__two__icon">
-        <h2>{{ textAbout.two.title }}</h2>
-        <p>{{ textAbout.two.paragrah.text_one }}</p>
-        <p>{{ textAbout.two.paragrah.text_two }}</p>
-        <p>{{ textAbout.two.paragrah.text_three }}</p>
-        <p>{{ textAbout.two.paragrah.text_four }}</p>
+        <div class="about__two__text">
+            <img :src="textAbout.two.icon" alt="About two" class="about__two__icon">
+            <h2>{{ textAbout.two.title }}</h2>
+            <p>{{ textAbout.two.paragrah.text_one }}</p>
+            <p>{{ textAbout.two.paragrah.text_two }}</p>
+            <p>{{ textAbout.two.paragrah.text_three }}</p>
+            <p>{{ textAbout.two.paragrah.text_four }}</p>
+        </div>
         <BasicImage
             :src="textAbout.two.image.src"
             :alt="textAbout.two.image.alt"
@@ -58,9 +62,11 @@
     </section>
 
     <section class="about__three">
-        <img :src="textAbout.three.icon" alt="About three" class="about__three__icon">
-        <h2>{{ textAbout.three.title }}</h2>
-        <p>{{ textAbout.three.paragrah.text_one }}</p>
+        <div>
+            <img :src="textAbout.three.icon" alt="About three" class="about__three__icon">
+            <h2>{{ textAbout.three.title }}</h2>
+            <p>{{ textAbout.three.paragrah.text_one }}</p>
+        </div>
         <BasicImage
             :src="textAbout.three.image.src"
             :alt="textAbout.three.image.alt"
@@ -75,12 +81,14 @@
     </section>
 
     <section class="about__four">
-        <img :src="textAbout.four.icon" alt="About four" class="about__four__icon">
-        <h2>{{ textAbout.four.title }}</h2>
-        <p>{{ textAbout.four.paragrah.text_one }}</p>
-        <p>{{ textAbout.four.paragrah.text_two }}</p>
-        <p>{{ textAbout.four.paragrah.text_three }}</p>
-        <p>{{ textAbout.four.paragrah.text_four }}</p>
+        <div>
+            <img :src="textAbout.four.icon" alt="About four" class="about__four__icon">
+            <h2>{{ textAbout.four.title }}</h2>
+            <p>{{ textAbout.four.paragrah.text_one }}</p>
+            <p>{{ textAbout.four.paragrah.text_two }}</p>
+            <p>{{ textAbout.four.paragrah.text_three }}</p>
+            <p>{{ textAbout.four.paragrah.text_four }}</p>
+        </div>
         <BasicImage
             :src="textAbout.four.image.src"
             :alt="textAbout.four.image.alt"
@@ -95,12 +103,14 @@
     </section>
 
     <section class="about__five">
-        <img :src="textAbout.five.icon" alt="About five" class="about__five__icon">
-        <h2>{{ textAbout.five.title }}</h2>
-        <p>{{ textAbout.five.paragrah.text_one }}</p>
-        <p>{{ textAbout.five.paragrah.text_two }}</p>
-        <p>{{ textAbout.five.paragrah.text_three }}</p>
-        <p>{{ textAbout.five.paragrah.text_four }}</p>
+        <div>
+            <img :src="textAbout.five.icon" alt="About five" class="about__five__icon">
+            <h2>{{ textAbout.five.title }}</h2>
+            <p>{{ textAbout.five.paragrah.text_one }}</p>
+            <p>{{ textAbout.five.paragrah.text_two }}</p>
+            <p>{{ textAbout.five.paragrah.text_three }}</p>
+            <p>{{ textAbout.five.paragrah.text_four }}</p>
+        </div>
         <BasicImage
             :src="textAbout.five.image.src"
             :alt="textAbout.five.image.alt"
@@ -115,13 +125,15 @@
     </section>
 
     <section class="about__six">
-        <img :src="textAbout.six.icon" alt="About six" class="about__six__icon">
-        <h2>{{ textAbout.six.title }}</h2>
-        <p>{{ textAbout.six.paragrah.text_one }}</p>
-        <p>{{ textAbout.six.paragrah.text_two }}</p>
-        <p>{{ textAbout.six.paragrah.text_three }}</p>
-        <p>{{ textAbout.six.paragrah.text_four }}</p>
-        <p>{{ textAbout.six.paragrah.text_five }}</p>
+        <div>
+            <img :src="textAbout.six.icon" alt="About six" class="about__six__icon">
+            <h2>{{ textAbout.six.title }}</h2>
+            <p>{{ textAbout.six.paragrah.text_one }}</p>
+            <p>{{ textAbout.six.paragrah.text_two }}</p>
+            <p>{{ textAbout.six.paragrah.text_three }}</p>
+            <p>{{ textAbout.six.paragrah.text_four }}</p>
+            <p>{{ textAbout.six.paragrah.text_five }}</p>
+        </div>
         <BasicImage
             :src="textAbout.six.image.src"
             :alt="textAbout.six.image.alt"
@@ -136,13 +148,15 @@
     </section>
 
     <section class="about__seven">
-        <img :src="textAbout.seven.icon" alt="About seven" class="about__seven__icon">
-        <h2>{{ textAbout.seven.title }}</h2>
-        <p>{{ textAbout.seven.paragrah.text_one }}</p>
-        <p>{{ textAbout.seven.paragrah.text_two }}</p>
-        <p>{{ textAbout.seven.paragrah.text_three }}</p>
-        <p>{{ textAbout.seven.paragrah.text_four }}</p>
-        <p>{{ textAbout.seven.paragrah.text_five }}</p>
+        <div>
+            <img :src="textAbout.seven.icon" alt="About seven" class="about__seven__icon">
+            <h2>{{ textAbout.seven.title }}</h2>
+            <p>{{ textAbout.seven.paragrah.text_one }}</p>
+            <p>{{ textAbout.seven.paragrah.text_two }}</p>
+            <p>{{ textAbout.seven.paragrah.text_three }}</p>
+            <p>{{ textAbout.seven.paragrah.text_four }}</p>
+            <p>{{ textAbout.seven.paragrah.text_five }}</p>
+        </div>
         <BasicImage
             :src="textAbout.seven.image.src"
             :alt="textAbout.seven.image.alt"
@@ -173,4 +187,4 @@ export default {
 };
 </script>
 
-<style lang="sass" src="@/assets/sass/components/basic/_image.sass" scoped></style>
+<style lang="sass" src="@/assets/sass/pages/about/_how-we-work.sass" scoped></style>
