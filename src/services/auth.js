@@ -13,6 +13,7 @@ export default {
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
       localStorage.setItem("user_id", response.data.id);
+      document.cookie = `accessToken=${response.data.access}; path=/; max-age=3600`; 
       return response.data;
     } catch (error) {
       return error.response.data;
@@ -27,9 +28,9 @@ export default {
     localStorage.removeItem("user_id");
   },
 
-  register(username, first_name, last_name, email, password) {
+  async register(username, first_name, last_name, email, password) {
     try{
-      const response = axios.post(URLCreateUser, {
+      const response = await axios.post(URLCreateUser, {
         username,
         first_name,
         last_name,
@@ -39,23 +40,32 @@ export default {
       console.log('Register success');
       return response.data;
     } catch (error) {
-      console.log(error);
-      console.log('Error in register')
-      return error.response.data;
+      console.log(error.response.data);
+      console.log('Error in register');
+      throw error;
     }
   },
 
 
 
   async refreshToken() {
-    try {
-      const response = await axios.post(URLToken + "refresh/", {
-        refresh: localStorage.getItem("refreshToken"),
-      });
-      localStorage.setItem("accessToken", response.data.access);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken){
+      console.log('No refresh token');
+      return;
+    } else{
+      try{
+        const response = await axios.post(URLToken + "refresh/", {
+          refresh: localStorage.getItem("refreshToken"),
+        });
+        localStorage.setItem("accessToken", response.data.access);
+        document.cookie = `accessToken=${response.data.access}; path=/; max-age=3600`;
+        return response.data;
+      } catch (error){
+        console.log('Error in refresh token');
+        console.log(error);
+      }
     }
+
   },
 }

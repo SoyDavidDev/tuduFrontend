@@ -1,9 +1,6 @@
 <template>
-<h1>ID LIST: {{ id }}</h1>
-<h2> ID USER: {{ user_id }}</h2>
 <ShareButton :tasks="tasks" @new-todo='handleNewTask' :isHomeView = "false"/>
 <TodoComponent :id="id" :user_id="user_id" :tasks="tasks" @new-task='handleNewTask'/>
-
 </template>
 
 <script>

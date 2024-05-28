@@ -7,6 +7,7 @@ import MylistsView from "../views/mylists/MylistsView.vue";
 import ListCreateView from "../views/list/ListCreateView.vue";
 import ListEditView from "../views/list/ListEditView.vue";
 import TodoView from "../views/list/TodoView.vue";
+import ProfileView from "@/views/profile/ProfileView.vue";
 
 const routes = [
   {
@@ -56,6 +57,14 @@ const routes = [
     path: "/list/:user_id/:id",
     name: "TodoView",
     component: TodoView,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: ProfileView,
     meta: {
       requiresAuth: true,
     },

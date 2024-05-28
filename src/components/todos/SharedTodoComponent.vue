@@ -18,6 +18,7 @@
       <v-col>
         <v-sheet>
           <v-form ref="form">
+
             <v-text-field
               v-model="newTodo.title"
               class= "input"
@@ -38,9 +39,17 @@
             <v-btn
               color="primary"
               type="submit"
-              class="mb-5"
+              class="mb-5 button"
               @click.prevent="addTodo"
             >Add tudú</v-btn>
+            <v-text-field
+              v-model="search"
+              label="Search"
+              prepend-inner-icon="mdi-magnify"
+              variant="outlined"
+              hide-details
+              single-line
+            ></v-text-field>
             <v-list class="todos">
               <v-list-item
                 v-for="(todo, index) in sortedTodoList()"

@@ -28,6 +28,8 @@
       v-if="!isLoggedIn">Register</v-btn>
       <v-btn text to="/mylists"
       v-if="isLoggedIn">My Lists</v-btn>
+      <v-btn text to="/profile"
+      v-if="isLoggedIn">Profile</v-btn>
       <v-btn text to="/login" @click="logout"
       v-if="isLoggedIn">Logout</v-btn>
     </v-app-bar>
@@ -40,13 +42,18 @@
 <script>
 import BasicImage from '@/components/basic/image/index.vue'
 import auth from "@/services/auth.js";
-import { computed } from 'vue';
+import { computed , onMounted } from 'vue';
 import { useStore } from "vuex";
 
 export default {
   name: "App",
   components: {
     BasicImage,
+  },
+  created(){
+    setInterval(() => {
+      auth.refreshToken();
+    }, 1800000);
   },
 
   data (){
@@ -56,10 +63,26 @@ export default {
   },
   setup(){
     const store = useStore();
+
+    const refreshToken = async () => {
+      setInterval(async () => {
+        try {
+          const response = await auth.refreshToken();
+          localStorage.setItem("accessToken", response.access);
+          document.cookie = `accessToken=${response.access}; path=/; max-age=3600`;
+        } catch (error) {
+          console.log("Error al refrescar el token");
+        }
+      }, 60000);
+    };
+
+    onMounted(refreshToken);
+
     return {
       isLoggedIn: computed(() => store.state.isLoggedIn),
       logout: ()=>{
         auth.logout();
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         store.commit("setLoggedIn", false);
       }
     }

@@ -43,7 +43,7 @@
             >Add tudú</v-btn>
             <v-list class="todos">
               <v-list-item
-                v-for="(todo, index) in todoList"
+                v-for="(todo, index) in sortedTodoList()"
                 :key="index"
                 @click="toggleCompleted(index)"
                 @contextmenu.prevent="deleteItem(index)"
@@ -149,6 +149,7 @@ export default {
           console.log('Response de getTodos', response);
           console.log('Data de getTodos', response.data);
           this.todoList = response.data;
+          this.sortedTodoList();
           console.log('La lista de todo de este usuario',this.todoList);
           this.$emit('new-task', response.data);
         })
@@ -190,6 +191,7 @@ export default {
       }
     },
     toggleCompleted(index)  {
+      console.log('INICIO TOGGLE COMPLETED');
       this.todoList[index].completed = !this.todoList[index].completed;
       const url = this.urlTodo + this.todoList[index].id + "/update/";
       var data = {
@@ -201,6 +203,7 @@ export default {
     },
     async deleteItem(index) {
       try{
+        console.log('INICIO DELETE ITEM')
         console.log('Id de item', this.todoList[index].id);
         const url = this.urlTodo + this.todoList[index].id + "/delete/";
         console.log('URL de item', url);
@@ -214,7 +217,12 @@ export default {
     editItem(index){
       this.newTodo = {...this.todoList[index]};
       this.editingId = this.todoList[index].id;
-    }
+    },
+    sortedTodoList() {
+      return this.todoList.sort((a, b) => {
+        return a.completed - b.completed;
+      });
+    },
   }
 };
 </script>

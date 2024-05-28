@@ -8,7 +8,8 @@
 
         <v-row>
         <v-col cols="12">
-            <v-btn 
+            <v-btn
+                class="create" 
                 color="primary" 
                 text to="/list/create"
                 >
@@ -17,41 +18,52 @@
         </v-col>
         </v-row>
         
-        <v-row v-for="list of lists" :key="list.id">
-            
-            <v-card
-            class="mx-auto"
-            max-width="344"
-            hover
+        <v-row>
+            <v-col
+            v-for="list of lists" 
+            :key="list.id"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
             >
-            <v-card-item @click.stop="goToList(list.user_id, list.id)">
-                <v-card-title>
-                Título lista {{ list.title }}
-                </v-card-title>
-                <v-card-subtitle>
-                Lista usuario número:    {{ list.user_id }}
-                Número lista;   {{ list.id }}
-                </v-card-subtitle>
-                <!-- Botón para editar y eliminar -->
-                <v-card-actions>
-                <v-btn
-                    color="primary"
-                    text
-                    @click.stop="goToEditList(list.user_id, list.id)"
+                <v-card
+                    class="mx-auto"
+                    max-width="344"
+                    hover
                 >
-                    Editar
-                </v-btn>
-                <v-btn
-                    color="error"
-                    text
-                    @click.stop="deleteList(list.id)"
-                >
-                    Eliminar
-                </v-btn>
-                </v-card-actions>
-            </v-card-item>
+                    <v-card-item @click.stop="goToList(list.user_id, list.id)">
+                        <v-card-title>
+                            {{ list.title }}
+                        </v-card-title>
+                    </v-card-item>
+                    <div class="buttons">
+                        <v-btn
+                        class="edit"
+                        append-icon="mdi-account-circle"
+                        text
+                        @click.stop="goToEditList(list.user_id, list.id)"
+                        >
+                        <template v-slot:append>
+                            <v-icon>mdi-pencil</v-icon>
+                        </template>
+                        Editar
+                        </v-btn>
 
-            </v-card>
+                        <v-btn
+                        class="delete"
+                        text
+                        @click.stop="deleteList(list.id)"
+                        >
+                        <template v-slot:append>
+                            <v-icon>mdi-delete</v-icon>
+                        </template>
+                        Eliminar
+                        </v-btn>
+                    </div>
+                </v-card>
+
+            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -63,7 +75,7 @@ export default {
     data() {
         return {
             lists: [],
-            urlLists: "http://127.0.0.1:8000/api/v1/lists/"
+            urlLists: "http://127.0.0.1:8000/api/v1/lists/",
         }
     },
     
@@ -106,3 +118,4 @@ export default {
     }
 }
 </script>
+<style lang="sass" src="@/assets/sass/pages/mylists/_mylists.sass" ></style>

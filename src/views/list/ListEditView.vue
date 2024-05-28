@@ -1,11 +1,16 @@
 <template>
     <v-container>
         <v-row>
-            <v-col cols="12" sm="6" offset-sm="3">
-                <v-card>
+            <v-col cols="12" sm="6" md="4" lg="3">
+                <v-card
+                class="mx-auto my-8"
+                elevation="16"
+                max-width="344"
+                >
                     <v-card-title>
                         <h1>Editar lista</h1>
                     </v-card-title>
+
                     <v-card-text>
                         <v-form @submit.prevent="editList">
                             <v-text-field
@@ -18,6 +23,7 @@
                             >Editar lista</v-btn>
                         </v-form>
                     </v-card-text>
+                    
                 </v-card>
             </v-col>
         </v-row>
@@ -40,13 +46,13 @@ export default {
     },
     async created() {
         try {
-            const response = await axios.get(this.urlList + this.id + '/');
+            const response = await axios.get(this.urlList + this.id + '/detail/');
             this.list = response.data;
             console.log('Response de created', response);
             console.log('List', this.list);
             console.log('ID', this.id);
-            console.log('Title of the list', response.data[0].title)
-            this.list.title = response.data[0].title;
+            console.log('Title of the list', response.data.title)
+            this.list.title = response.data.title;
         } catch (error) {
             console.error(error);
             console.log('Error al cargar la lista.');
@@ -57,13 +63,17 @@ export default {
             try {
                 const update = {
                     title: this.list.title,
+                    user_id: this.user_id,
                 }
+                console.log('Update', update);
+                console.log('URL list', this.urlList + this.id + '/update/')
                 const response = 
                 await axios
                 .put(
                     this.urlList + this.id + '/update/', 
                     update
                 );
+
                 this.list = response.data;
                 console.log('Response de editList', response);
                 console.log('Lista editada', this.list);

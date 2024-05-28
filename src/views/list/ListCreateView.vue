@@ -1,12 +1,15 @@
 <template>
     <v-container>
+      
       <v-row>
         <v-col>
           <h1>Listas</h1>
         </v-col>
       </v-row>
+
       <v-row>
-        <v-col>
+        <v-col cols="12" sm="6" md="4" lg="3">
+
           <v-sheet>
             <v-form ref="form" @submit.prevent="addList">
               <v-text-field
@@ -25,14 +28,16 @@
                   :key="index"
                 >
                   <div>
-                    <h6>{{ list.title }}</h6>
+                    <h4>{{ list.title }}</h4>
                   </div>
                 </v-list-item>
               </v-list>
             </v-form>
           </v-sheet>
+
         </v-col>
       </v-row>
+
     </v-container>
   </template>
   
@@ -93,3 +98,5 @@
     }
   };
   </script>
+  <style lang="sass" src="@/assets/sass/pages/lists/_listCreate.sass" scoped></style>
+  ```
