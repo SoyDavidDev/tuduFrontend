@@ -49,6 +49,9 @@
         <p v-show="error" class="error">
           Has introducido mal el email o la contraseña.
         </p>
+        <p v-show="message" class="message">
+          {{message}}
+        </p>
 
       </div>
 
@@ -57,7 +60,6 @@
         <v-card-actions>
           <v-btn color="secondary" @click="resetPasswordChange">{{!resetPassword ? 'Recordar Contraseña' : 'Iniciar Sesión'}}</v-btn>
         </v-card-actions>
-
       </div>
     </form>
   </div>
@@ -77,7 +79,9 @@ export default {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters',
           emailMatch: () => ('The email and password you entered don\'t match')
-        }
+        },
+    message: "",
+    user_id: "",
   }),
   methods: {
     async login() {
@@ -87,21 +91,24 @@ export default {
       try{
         const response = await auth.login(this.username, this.password);
         if (response.access){
-          // Aquí deberíamos guardar el token en el localStorage
           localStorage.setItem("accessToken", response.access);
           localStorage.setItem('userId', response.user_id);
-          this.$store.commit("setLoggedIn", true);
           console.log('Response: ',response);
-          console.log("Logged in");
-          this.$router.push("/mylists");
-        } else {
+          this.$store.commit("setLoggedIn", true);
+          console.log('Logged in');
+          this.$router.push('/mylists');
+
+        } else{
           this.error = true;
-        }
-        
+          this.message = 'Tu cuenta está inactiva.'
+          this.$store.commit("setLoggedIn", false);
+        }   
       } catch (error) {
         console.log("Error con la response");
         this.error = true;
         console.log(error);
+        this.$store.commit("setLoggedIn", false);
+
       }
     },
     resetPasswordChange() {

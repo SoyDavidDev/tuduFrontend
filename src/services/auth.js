@@ -26,6 +26,7 @@ export default {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("user_id");
+    localStorage.setItem('setLoggedIn', false);
   },
 
   async register(username, first_name, last_name, email, password) {

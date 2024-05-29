@@ -12,7 +12,6 @@
             id="username"
             required
             placeholder="Username"
-            :rules="[rules.required, rules.min]"
           />
           <label class="form-label" for="#first_name">First Name:</label>
           <v-text-field
@@ -22,7 +21,6 @@
             id="first_name"
             required
             placeholder="First Name"
-            :rules="[rules.required, rules.min]"
           />
           <label class="form-label" for="#last_name">Last Name:</label>
           <v-text-field
@@ -32,7 +30,6 @@
             id="last_name"
             required
             placeholder="Last Name"
-            :rules="[rules.required, rules.min]"
           />
           <label class="form-label" for="#email">Email:</label>
           <v-text-field
@@ -42,7 +39,6 @@
             id="email"
             required
             placeholder="Email"
-            :rules="[rules.required, rules.min]"
           />
           <label class="form-label" for="#password">Password:</label>
           <v-text-field
