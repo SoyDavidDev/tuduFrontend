@@ -11,7 +11,7 @@ Tudú es una aplicación web que permite a los usuarios gestionar sus listas de 
 1. Clona este repositorio en tu máquina local:
 
    ```bash
-   git clone https://github.com/tu-usuario/tudu-frontend.git
+   git clone [https://github.com/SoyDavidDev/tuduFrontend.git]
 
 
 ## Project setup
