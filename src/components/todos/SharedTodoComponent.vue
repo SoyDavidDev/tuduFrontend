@@ -42,14 +42,6 @@
               class="mb-5 button"
               @click.prevent="addTodo"
             >Add tudú</v-btn>
-            <v-text-field
-              v-model="search"
-              label="Search"
-              prepend-inner-icon="mdi-magnify"
-              variant="outlined"
-              hide-details
-              single-line
-            ></v-text-field>
             <v-list class="todos">
               <v-list-item
                 v-for="(todo, index) in sortedTodoList()"

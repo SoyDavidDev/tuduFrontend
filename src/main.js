@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
+import { createMetaManager } from "vue-meta";
 
 import store from "./store";
 
@@ -23,4 +24,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-createApp(App).use(router).use(vuetify).use(store).mount("#app");
+createApp(App).use(router).use(vuetify).use(store).use(createMetaManager).mount("#app");

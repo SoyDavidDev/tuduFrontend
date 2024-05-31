@@ -43,6 +43,7 @@
 import BasicImage from '@/components/basic/image/index.vue'
 import auth from "@/services/auth.js";
 import { computed , onMounted } from 'vue';
+import { useMeta } from 'vue-meta';
 import { useStore } from "vuex";
 
 export default {
@@ -54,6 +55,11 @@ export default {
     setInterval(() => {
       auth.refreshToken();
     }, 1800000);
+  },
+  setup(){
+    useMeta({
+      title: 'Tudus',
+    });
   },
 
   data (){

@@ -63,6 +63,24 @@
       </div>
     </form>
   </div>
+
+
+  <v-dialog v-model="dialog" persistent max-width="500">
+        <v-card class="d-flex flex-column align-center justify-center">
+        <v-card-title class="headline">
+            Email enviado
+        </v-card-title>
+            <v-card-subtitle>
+            Por favor, revisa tu correo para cambiar tu contraseña
+            </v-card-subtitle>
+            <v-card-actions class="justify-center">
+            <v-btn icon color="green darken-1" @click="closeDialog">
+                Cerrar
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
@@ -84,12 +102,14 @@ export default {
     user_id: "",
     wasInactive: false,
     email: "",
+    dialog: false,
   }),
   methods: {
 
     handleSubmit(){
       if (this.resetPassword){
         this.resetPasswordChange();
+        this.dialog = true;
       } else {
         this.login();
       }
@@ -138,6 +158,9 @@ export default {
         }
       }
     },
+    closeDialog(){
+      this.dialog = false;
+    }
 
   },
 };
