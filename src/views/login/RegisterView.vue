@@ -115,6 +115,8 @@
             this.last_name,
             this.email, 
             this.password);
+          
+          this.$router.push('/login');
         }catch(e){
           console.log("ERROR EN LA CONEXIÓN",e);
           if (e.response && e.response.status === 400) {

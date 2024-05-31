@@ -8,6 +8,7 @@ import ListCreateView from "../views/list/ListCreateView.vue";
 import ListEditView from "../views/list/ListEditView.vue";
 import TodoView from "../views/list/TodoView.vue";
 import ProfileView from "@/views/profile/ProfileView.vue";
+import ResetPasswordConfirmView from "@/views/resetPass/ResetPasswordConfirmView.vue";
 
 const routes = [
   {
@@ -68,6 +69,11 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
+  },
+  {
+    path: "/reset-password-confirm/:uid/:token",
+    name: "reset-password-confirm",
+    component: ResetPasswordConfirmView,
   },
 ];
 

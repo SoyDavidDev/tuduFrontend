@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <h1 class="title">Log in</h1>
-    <form action id="main-form" class="form" @submit.prevent="login">
+    <form action id="main-form" class="form" @submit.prevent="handleSubmit">
 
       <div class="form-email" v-if="resetPassword">
         <label class="form-label" for="#email">Email:</label>
@@ -12,7 +12,6 @@
             id="email"
             required
             placeholder="Email"
-            :rules="[rules.required, rules.min]"
           />
       </div>
 
@@ -25,7 +24,6 @@
           id="username"
           required
           placeholder="Username"
-          :rules="[rules.required, rules.min]"
           filled
           color="transparent"
           v-show="!resetPassword"
@@ -47,7 +45,7 @@
             v-show="!resetPassword"
           />
         <p v-show="error" class="error">
-          Has introducido mal el email o la contraseña.
+          Has introducido mal tu usuario y/o contraseña.
         </p>
         <p v-show="message" class="message">
           {{message}}
@@ -55,6 +53,8 @@
 
       </div>
 
+      <!-- revisar función de botones submit y hacer iuno para login y otro
+      para resetpassword -->
       <div class="form-actions">
         <input class="form-submit" type="submit" :value="resetPassword ? 'Recordar contraseña' : 'Iniciar sesión'" />      
         <v-card-actions>
@@ -82,8 +82,18 @@ export default {
         },
     message: "",
     user_id: "",
+    wasInactive: false,
+    email: "",
   }),
   methods: {
+
+    handleSubmit(){
+      if (this.resetPassword){
+        this.resetPasswordChange();
+      } else {
+        this.login();
+      }
+    },
     async login() {
       console.log("Login");
       console.log(this.username);
@@ -93,14 +103,17 @@ export default {
         if (response.access){
           localStorage.setItem("accessToken", response.access);
           localStorage.setItem('userId', response.user_id);
+          localStorage.setItem('was_inactive', String(response.was_inactive));
+          this.wasInactive = response.was_inactive;
+          console.log('Was inactive after login: ', this.wasInactive);
           console.log('Response: ',response);
           this.$store.commit("setLoggedIn", true);
           console.log('Logged in');
           this.$router.push('/mylists');
+          
 
         } else{
           this.error = true;
-          this.message = 'Tu cuenta está inactiva.'
           this.$store.commit("setLoggedIn", false);
         }   
       } catch (error) {
@@ -111,10 +124,21 @@ export default {
 
       }
     },
-    resetPasswordChange() {
+    async resetPasswordChange() {
       this.resetPassword = !this.resetPassword;
       console.log('Solicitar cambio de contraseña');
+      if (this.resetPassword){
+        try{
+          const response = await auth.resetPassword(this.email);
+          console.log(response);
+        } catch (error){
+          console.log("Error con la response");
+          this.error = true;
+          console.log(error);
+        }
+      }
     },
+
   },
 };
 </script>

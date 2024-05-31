@@ -38,48 +38,6 @@
             class="about__one__image"
         />
     </section>
-
-    <section class="about__two">
-        <div class="about__two__text">
-            <img :src="textAbout.two.icon" alt="About two" class="about__two__icon">
-            <h2>{{ textAbout.two.title }}</h2>
-            <p>{{ textAbout.two.paragrah.text_one }}</p>
-            <p>{{ textAbout.two.paragrah.text_two }}</p>
-            <p>{{ textAbout.two.paragrah.text_three }}</p>
-            <p>{{ textAbout.two.paragrah.text_four }}</p>
-        </div>
-        <BasicImage
-            :src="textAbout.two.image.src"
-            :alt="textAbout.two.image.alt"
-            :width="textAbout.two.image.width"
-            :height="textAbout.two.image.height"
-            :sources="textAbout.two.image.sources"
-            :attrs="textAbout.two.image.attrs"
-            :type="textAbout.two.image.type"
-            :radius="textAbout.two.image.radius"
-            class="about__two__image"
-        />
-    </section>
-
-    <section class="about__three">
-        <div>
-            <img :src="textAbout.three.icon" alt="About three" class="about__three__icon">
-            <h2>{{ textAbout.three.title }}</h2>
-            <p>{{ textAbout.three.paragrah.text_one }}</p>
-        </div>
-        <BasicImage
-            :src="textAbout.three.image.src"
-            :alt="textAbout.three.image.alt"
-            :width="textAbout.three.image.width"
-            :height="textAbout.three.image.height"
-            :sources="textAbout.three.image.sources"
-            :attrs="textAbout.three.image.attrs"
-            :type="textAbout.three.image.type"
-            :radius="textAbout.three.image.radius"
-            class="about__three__image"
-        />
-    </section>
-
     <section class="about__four">
         <div>
             <img :src="textAbout.four.icon" alt="About four" class="about__four__icon">

@@ -66,6 +66,23 @@
             </v-col>
         </v-row>
     </v-container>
+
+    <v-dialog v-model="dialog" persistent max-width="290">
+        <v-card class="d-flex flex-column align-center justify-center">
+        <v-card-title class="headline">
+            Bienvenido de nuevo!
+        </v-card-title>
+            <v-card-subtitle>
+            Vuelve a disfrutar de tus listas Tudú!
+            </v-card-subtitle>
+            <v-card-actions class="justify-center">
+            <v-btn icon color="green darken-1" @click="closeDialog">
+                Cerrar
+                <v-icon>mdi-close</v-icon>
+            </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
@@ -76,10 +93,13 @@ export default {
         return {
             lists: [],
             urlLists: "http://127.0.0.1:8000/api/v1/lists/",
+            dialog: false,
+            wasInactive: false,
         }
     },
-    
     created() {
+        this.wasInactive = localStorage.getItem('was_inactive') === 'true';
+        this.dialog = this.wasInactive;
         this.fetchLists();
     },
     methods: {
@@ -113,7 +133,13 @@ export default {
             .catch(error => {
                 console.error('Error deleting list:', error);
             });
-        }
+        },
+        closeDialog() {
+            this.dialog = false;
+            this.wasInactive = false;
+            localStorage.setItem('was_inactive', 'false');
+            console.log('Was inactive after close dialog: ', this.wasInactive);
+        },
 
     }
 }

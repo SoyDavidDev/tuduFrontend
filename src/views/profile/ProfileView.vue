@@ -7,23 +7,29 @@
           <label for="password" class="form-label">Contraseña Actual:</label>
           <v-text-field 
             label="Contraseña Actual" 
-            type="password" 
+            :type="show1 ? 'text' : 'password'" 
             id="password"
             v-model="password"
+            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show1 = !show1"
           />
           <label for="new_password" class="form-label">Nueva Contraseña:</label>
           <v-text-field 
             label="Nueva Contraseña" 
-            type="password" 
+            :type="show2 ? 'text' : 'password'" 
             id="new_password"
             v-model="new_password"
+            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show2 = !show2"
           />
           <label for="new_password_repeat" class="form-label">Repetir Nueva Contraseña:</label> 
           <v-text-field 
             label="Repetir Nueva Contraseña" 
-            type="password" 
+            :type="show3 ? 'text' : 'password'" 
             id="new_password_repeat"
             v-model="new_password_repeat"
+            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="show3 = !show3"
           />
         </div>
 
@@ -120,7 +126,9 @@ import auth from "@/services/auth.js";
         password: "",
         new_password: "",
         new_password_repeat: "",
-        show: false,
+        show1: false,
+        show2: false,
+        show3: false,
         rules: {
           required: value => !!value || 'Required.',
           min: v => v.length >= 8 || 'Min 8 characters',
@@ -274,8 +282,10 @@ import auth from "@/services/auth.js";
             .then(response => {
               console.log('Cuenta pausada');
               this.updatedMessage = 'Cuenta pausada correctamente';
-              this.$router.push("/login");
+              console.log('Llamando a auth.logout()')
               auth.logout();
+              console.log('Redirigiendo a login');
+              this.$router.push("/login");
             })
             .catch(error => {
               console.log('Error al pausar cuenta 1', error);
@@ -285,7 +295,6 @@ import auth from "@/services/auth.js";
           console.log('Error al pausar cuenta 2', error);
           this.errorMessage = 'Algo salió mal al pausar la cuenta';
         }
-
       },
       showPauseDialog() {
         console.log('Mostrar diálogo de pausar cuenta');

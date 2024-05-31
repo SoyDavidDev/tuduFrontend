@@ -151,7 +151,7 @@ export default {
           this.todoList = response.data;
           this.sortedTodoList();
           console.log('La lista de todo de este usuario',this.todoList);
-          this.$emit('new-task', response.data);
+          this.$emit('update-tasks', this.todoList);
         })
         .catch((error) => {
           console.error(error);
@@ -182,7 +182,7 @@ export default {
           this.$refs.form.reset();
           this.todoList.unshift(response.data);
 
-          this.$emit('new-task', response.data);
+          this.$emit('new-task', this.todoList);
           console.log('Tarea agregada', response.data);
         } catch (error) {
           console.error(error);
@@ -198,6 +198,7 @@ export default {
         completed: this.todoList[index].completed,
       };
       axios.patch(url, data).then(() => {
+        this.$emit('new-task', this.todoList);
         this.getTodos();
       });
     },
@@ -210,6 +211,8 @@ export default {
         await axios.delete(url);
         console.log('Item eliminado');
         this.todoList.splice(index, 1);
+        this.$emit('new-task', this.todoList);
+
       } catch{
         console.log('Error al eliminar item');
       }
@@ -217,6 +220,8 @@ export default {
     editItem(index){
       this.newTodo = {...this.todoList[index]};
       this.editingId = this.todoList[index].id;
+      this.$emit('new-task', this.todoList);
+
     },
     sortedTodoList() {
       return this.todoList.sort((a, b) => {

@@ -21,9 +21,9 @@ import SharedTodoComponent from '@/components/todos/SharedTodoComponent.vue';
 
 export default{
     components: {
-        SharedTodoComponent
+        SharedTodoComponent,
     },
-    props: ['tasks', 'isHomeView'],
+    props: ['tasks', 'isHomeView',],
     data(){
         return {
             localTasks: [],
@@ -37,28 +37,20 @@ export default{
     },
     methods: {
         handleNewTask(taskList){
-            console.log('NUEVAS TAREAS handler', taskList);
+            console.log('NUEVAS TAREAS handler HOMEVIEW', taskList);
             this.localTasks = taskList;
         },
         generateTasksText(){
-            console.log('TAREAS generatetext', this.localTasks);
-            let tasksText = '';
-            for (let i = 0; i < this.localTasks.length; i++) {
-                tasksText += `${i + 1}. ${this.localTasks[i].title}`;
-                if (this.localTasks[i].description) {
-                    tasksText += ` - ${this.localTasks[i].description}`;
-                }
-                if (this.localTasks[i].completed) {
-                    tasksText += ' (Completada)';
-                } else {
-                    tasksText += ' (Pendiente)';
-                }
-                tasksText += '\n';
-            }
-            return tasksText;
-        },
+        console.log('TAREAS generatetext', this.localTasks);
+        const tasksText = this.localTasks.map((task, index) => {
+            const status = task.completed ? 'Completada' : 'Pendiente';
+            const description = task.description ? ` - ${task.description}` : '';
+            return `${index + 1}. ${task.title}${description} (${status})`;
+        }).join('\n');
+        return tasksText;
+    },
         shareOnWhatsApp(){
-            const text = encodeURIComponent(`Mira mi lista de tareas:\n${this.generateTasksText()}`);
+            const text = encodeURIComponent(`*Mira mi lista de tareas:*\n${this.generateTasksText()}`);
             console.log(text);
             window.open(`https://wa.me/?text=${text}`, '_blank');
         },
