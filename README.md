@@ -1,4 +1,18 @@
-# todo
+# Tudú Frontend
+
+Este es el frontend del proyecto final para DAW, llamado Tudú, una aplicación de gestión de listas de tareas desarrollada con Vue.js.
+
+## Descripción del Proyecto
+
+Tudú es una aplicación web que permite a los usuarios gestionar sus listas de tareas de manera eficiente. Con Tudú, los usuarios pueden crear, actualizar y eliminar listas de tareas, así como agregar, marcar como completadas y eliminar tareas individuales.
+
+## Instalación
+
+1. Clona este repositorio en tu máquina local:
+
+   ```bash
+   git clone https://github.com/tu-usuario/tudu-frontend.git
+
 
 ## Project setup
 ```
@@ -10,15 +24,8 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Abre tu navegador y visita http://localhost:8080 para ver la aplicación en funcionamiento.
 
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
